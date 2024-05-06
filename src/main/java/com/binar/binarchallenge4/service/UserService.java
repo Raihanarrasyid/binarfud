@@ -2,6 +2,7 @@ package com.binar.binarchallenge4.service;
 
 import com.binar.binarchallenge4.entity.User;
 import com.binar.binarchallenge4.model.RegisterUserRequest;
+import com.binar.binarchallenge4.model.UpdateUserRequest;
 import com.binar.binarchallenge4.repository.UserRepository;
 import com.binar.binarchallenge4.security.BCrypt;
 import jakarta.transaction.Transactional;
@@ -37,5 +38,22 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void update(UpdateUserRequest request) {
+        Set<ConstraintViolation<UpdateUserRequest>> constraintViolations = validator.validate(request);
+        if(constraintViolations.size() != 0) {
+            throw new ConstraintViolationException(constraintViolations);
+        }
+        User user = userRepository.findById(request.getId()).get();
+        user.setUsername(request.getUsername());
+        user.setPassword(BCrypt.hashpw(request.getPassword(),BCrypt.gensalt()));
+        userRepository.save(user);
+    }
 
+    public void delete(int id) {
+        userRepository.deleteById(id);
+    }
+
+    public User findById(int id) {
+        return userRepository.findById(id).get();
+    }
 }
