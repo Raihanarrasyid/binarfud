@@ -1,6 +1,7 @@
 package com.binar.binarchallenge4.controller;
 
 import com.binar.binarchallenge4.model.RegisterUserRequest;
+import com.binar.binarchallenge4.model.UpdateUserRequest;
 import com.binar.binarchallenge4.model.WebResponse;
 import com.binar.binarchallenge4.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -48,6 +49,44 @@ class UserControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
+        ).andExpectAll(
+                status().isOk()
+        ).andDo(result -> {
+            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+
+            assertEquals("OK", response.getData());
+        });
+    }
+
+    @Test
+    void testUpdateSuccess() throws Exception {
+        UpdateUserRequest request = new UpdateUserRequest();
+        request.setId(1);
+        request.setUsername("raihan");
+        request.setEmail("test@gmail.com");
+        request.setPassword("done");
+        mockMvc.perform(
+                put("/api/users")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request))
+        ).andExpectAll(
+                status().isOk()
+        ).andDo(result -> {
+            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+
+            assertEquals("OK", response.getData());
+        });
+    }
+
+    @Test
+    void testDeleteSuccess() throws Exception {
+        mockMvc.perform(
+                delete("/api/users/1")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
         ).andExpectAll(
                 status().isOk()
         ).andDo(result -> {
