@@ -36,6 +36,15 @@ public class MerchantService {
         merchant.setLocation(request.getLocation());
         merchant.setOpen(request.isOpen());
         merchantRepository.save(merchant);
-        logger.info("Merchant registered")
+        logger.info("Merchant registered");
     }
+
+    public void setStatus(boolean isOpen) {
+        Merchant merchant = new Merchant();
+        merchant.setOpen(isOpen);
+        merchantRepository.save(merchant);
+        logger.info("Merchant set to : " + isOpen);
+    }
+
+
 }
