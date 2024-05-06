@@ -40,3 +40,5 @@ CREATE TABLE
     );
 
 select * from users;
+
+DELETE FROM users;

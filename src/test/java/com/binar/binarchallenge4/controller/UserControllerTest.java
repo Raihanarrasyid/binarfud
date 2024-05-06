@@ -31,6 +31,11 @@ class UserControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @BeforeEach
+    void setUp() {
+        userRepository.deleteAll();
+    }
+
 
     @Test
     void testRegisterSuccess() throws Exception {
