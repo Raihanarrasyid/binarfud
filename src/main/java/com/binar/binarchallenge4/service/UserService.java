@@ -58,6 +58,7 @@ public class UserService {
         logger.info("User updated : " + request.getId() + " - " + request.getUsername() + " - " + request.getPassword() + " - " + request.getEmail());   
     }
 
+    @Transactional
     public void delete(int id) {
         userRepository.deleteById(id);
         logger.info("User deleted : " + id);

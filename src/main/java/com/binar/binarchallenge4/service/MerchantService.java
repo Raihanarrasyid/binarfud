@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -39,11 +40,17 @@ public class MerchantService {
         logger.info("Merchant registered");
     }
 
+    @Transactional
     public void setStatus(boolean isOpen) {
         Merchant merchant = new Merchant();
         merchant.setOpen(isOpen);
         merchantRepository.save(merchant);
         logger.info("Merchant set to : " + isOpen);
+    }
+
+    public List<Merchant> findOpen() {
+        logger.info("Find open merchant");
+        return merchantRepository.findByOpen(true);
     }
 
 
