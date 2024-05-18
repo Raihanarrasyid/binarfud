@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -67,5 +68,10 @@ public class UserService {
     public User findById(int id) {
         logger.info("find user by id : " + id);
         return userRepository.findById(id).get();
+    }
+
+    public List<User> getAll() {
+        logger.info("returning all user");
+        return userRepository.findAll();
     }
 }
